@@ -3,12 +3,12 @@ import java.util.Random;
 
 
 public class NavioBuilder {
-    private static Random random = new Random();
+    private static final Random RANDOM = new Random();
     
     private static Celula obtemCelulaVaziaAleatoria(Tabuleiro tabuleiro) {
         while (true) {
-            int x = random.nextInt(tabuleiro.getLargura());
-            int y = random.nextInt(tabuleiro.getAltura());
+            int x = RANDOM.nextInt(tabuleiro.getLargura());
+            int y = RANDOM.nextInt(tabuleiro.getAltura());
             Celula celula = tabuleiro.getTabuleiro()[x][y];
 
             if (!celula.isNavio()) {
@@ -72,6 +72,6 @@ public class NavioBuilder {
     }
     
      private static boolean orientaçãoAleatoria() {
-        return random.nextBoolean();
+        return RANDOM.nextBoolean();
     }
 }

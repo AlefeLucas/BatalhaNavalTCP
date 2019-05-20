@@ -3,8 +3,7 @@
 public class Navio {
 
     private int tamanhoRestante;
-    private final Celula[] celulas;
-    
+    private final Celula[] celulas;    
     private final TipoNavio tipo;
 
     public Navio(TipoNavio tipo, Tabuleiro tabuleiro) {
@@ -40,5 +39,11 @@ public class Navio {
     public boolean estaVivo(){
         return tamanhoRestante > 0;
     }
+
+    public TipoNavio getTipo() {
+        return tipo;
+    }
+    
+    
     
 }
