@@ -3,6 +3,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 class ConnectionServidor  implements Runnable{
@@ -35,9 +37,24 @@ class ConnectionServidor  implements Runnable{
     
     @Override
     public void run() {
-        /**
-         * TODO PAREI AQUI
-         */
+      Object object;
+      
+      while(true){
+          try {
+              object = input.readObject();
+              
+              if(object instanceof Celula){
+                   cliente.atualizaCelulaInimiga((Celula) object);
+              } else if(object instanceof Ponto){
+                  Celula resultado = cliente.serAtacado((Ponto) object);
+                  write(resultado);                
+              } else if(object instanceof String && ((String) object).equals("WIN")){
+                  cliente.setVitoria();
+              }
+          } catch (IOException | ClassNotFoundException ex) {
+              ex.printStackTrace();
+          }
+      }
         
         
     }
