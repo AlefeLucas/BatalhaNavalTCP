@@ -6,58 +6,55 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+class ConnectionServidor implements Runnable {
 
-class ConnectionServidor  implements Runnable{
     private Socket socket;
     private ClienteBatalhaNaval cliente;
-    
-    private  Thread thread;
 
-    private  ObjectInputStream input;
-    private  ObjectOutputStream output;
+    private Thread thread;
+
+    private ObjectInputStream input;
+    private ObjectOutputStream output;
 
     public ConnectionServidor(Socket socket, ClienteBatalhaNaval cliente) throws IOException {
         this.socket = socket;
         this.cliente = cliente;
-        
-         this.thread = new Thread(this);
+
+        this.thread = new Thread(this);
         this.thread.start();
 
         output = new ObjectOutputStream(this.socket.getOutputStream());
         input = new ObjectInputStream(this.socket.getInputStream());
     }
-    
-    public void write(Object object) throws IOException{
+
+    public void write(Object object) throws IOException {
         output.writeObject(object);
         output.flush();
     }
 
-    
-    
-    
     @Override
     public void run() {
-      Object object;
-      
-      while(true){
-          try {
-              object = input.readObject();
-              
-              if(object instanceof Celula){
-                   cliente.atualizaCelulaInimiga((Celula) object);
-              } else if(object instanceof Ponto){
-                  Celula resultado = cliente.serAtacado((Ponto) object);
-                  write(resultado);                
-              } else if(object instanceof String && ((String) object).equals("WIN")){
-                  cliente.setVitoria();
-              }
-          } catch (IOException | ClassNotFoundException ex) {
-              ex.printStackTrace();
-          }
-      }
-        
-        
+        Object object;
+
+        while (true) {
+            try {
+                object = input.readObject();
+
+                if (object instanceof Celula) {
+                    cliente.atualizaCelulaInimiga((Celula) object);
+                } else if (object instanceof Ponto) {
+                    Celula resultado = cliente.serAtacado((Ponto) object);
+                    write(resultado);
+                } else if (object instanceof String && ((String) object).equals("WIN")) {
+                    cliente.setVitoria();
+                }
+            } catch (IOException | ClassNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (NullPointerException e) {
+                //FAZ NADA
+            }
+        }
+
     }
-    
-    
+
 }
