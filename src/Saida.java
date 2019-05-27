@@ -41,7 +41,7 @@ class Saida {
     void pedirPontoAtaque() throws IOException {
         System.out.println("Digite coordenada para atacar (ex: A1): ");
         Scanner scanner = new Scanner(System.in);
-        String linha = scanner.nextLine();
+        String linha = scanner.nextLine().toUpperCase();
         int x = linha.charAt(0) - 'A';
         int y = linha.charAt(1) - '0';
                 

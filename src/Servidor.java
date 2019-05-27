@@ -26,13 +26,13 @@ public class Servidor {
         Socket socket;
 
         while(clientes.size() < 2){
-            System.out.println("Aguardando cliente.");
+            System.out.println("Aguardando cliente... " + clientes.size() + " de 2.");
             socket = serverSocket.accept();
 
             System.out.println("Obteve cliente.");
             clientes.add(new ConnectionCliente(socket, this));
         }
 
-        System.out.println(clientes.size());
+        System.out.println("2 de 2.");
     }
 }

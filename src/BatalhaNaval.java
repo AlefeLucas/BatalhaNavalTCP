@@ -15,9 +15,6 @@ public class BatalhaNaval {
         socketCliente.setJogo(this);
         
         criaNovoTabuleiroJogador();
-        
-        System.out.println("SEU TABULEIRO:");
-        this.tabuleiroJogador.imprime();
     }
     
     private void criaNovoTabuleiroJogador() {
