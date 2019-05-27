@@ -19,7 +19,7 @@ class ClienteBatalhaNaval extends Cliente {
         this.jogo = jogo;
     }
 
-    Celula serAtacado(Ponto ponto) {
+    Celula serAtacado(Ponto ponto) throws IOException {
         return jogo.serAtacado(ponto);
     }
     
@@ -43,12 +43,8 @@ class ClienteBatalhaNaval extends Cliente {
         return tabuleiro;
     }
     
-    public void sendWin() throws IOException {
+    public void enviaVitoria() throws IOException {
         getConnection().write("WIN");
-    }
-
-    void enviaVitoria() {
-        jogo.vitoria();
     }
 
 }

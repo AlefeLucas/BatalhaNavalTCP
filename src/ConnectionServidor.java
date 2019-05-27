@@ -46,6 +46,7 @@ class ConnectionServidor implements Runnable {
                     write(resultado);
                 } else if (object instanceof String && ((String) object).equals("WIN")) {
                     cliente.setVitoria();
+                    System.exit(0);
                 }
             
             } catch (IOException | ClassNotFoundException ex) {
