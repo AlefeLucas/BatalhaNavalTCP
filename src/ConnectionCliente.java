@@ -37,7 +37,9 @@ public class ConnectionCliente implements Runnable {
 
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-            } 
+            } catch(NullPointerException e){
+                //FAZ NADA
+            }
         }
     }
 

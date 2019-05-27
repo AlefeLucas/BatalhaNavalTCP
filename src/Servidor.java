@@ -1,6 +1,7 @@
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,5 +20,19 @@ public class Servidor {
         }
         
         throw new IllegalStateException("Não foi possível obter outro cliente");
+    }
+
+    void iniciar() throws IOException {
+        Socket socket;
+
+        while(clientes.size() < 2){
+            System.out.println("Aguardando cliente.");
+            socket = serverSocket.accept();
+
+            System.out.println("Obteve cliente.");
+            clientes.add(new ConnectionCliente(socket, this));
+        }
+
+        System.out.println(clientes.size());
     }
 }

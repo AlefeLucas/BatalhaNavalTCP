@@ -47,4 +47,8 @@ class ClienteBatalhaNaval extends Cliente {
         getConnection().write("WIN");
     }
 
+    void enviaVitoria() {
+        jogo.vitoria();
+    }
+
 }
