@@ -23,13 +23,13 @@ enum TipoNavio {
      public char getTipo() {
         switch (this) {
             case PORTA_AVIÕES:
-                return 'p';
+                return 'P';
             case NAVIO_TANQUE:
-                return 't';
+                return 'T';
             case CONTRATORPEDEIRO:
-                return 'c';
+                return 'C';
             case SUBMARINO:
-                return 's';
+                return 'S';
         }
 
         throw new IllegalStateException("Tipo não tratado");
@@ -53,8 +53,8 @@ enum TipoNavio {
     public static int getNumeroCelulasNavios() {
         int celulasNavios = 0;
         TipoNavio[] values = TipoNavio.values();
-        for (int i = 0; i < values.length; i++) {
-            celulasNavios += getNumeroCelulasPorTipo(values[i]);
+        for (TipoNavio tipo : values) {
+            celulasNavios += getNumeroCelulasPorTipo(tipo);
         }
         return celulasNavios;
     }

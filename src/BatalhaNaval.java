@@ -5,13 +5,14 @@ import java.io.IOException;
 public class BatalhaNaval {
     public static final int TAMANHO_TABULEIRO = 10;
     private Tabuleiro tabuleiroJogador;
-    private ClienteBatalhaNaval socketCliente;
+    private final ClienteBatalhaNaval socketCliente;
     
     public BatalhaNaval() throws IOException{
         socketCliente = new ClienteBatalhaNaval("127.0.0.1", 8080);
         socketCliente.setJogo(this);
         
         criaNovoTabuleiroJogador();
+        this.tabuleiroJogador.imprime();
     }
     
     private void criaNovoTabuleiroJogador() {
@@ -34,7 +35,7 @@ public class BatalhaNaval {
             }
         } 
         
-        // TODO printa tabuleiros
+        this.tabuleiroJogador.imprime();
         
         if(verificaFimJogo()){
             perdeu();
@@ -57,7 +58,7 @@ public class BatalhaNaval {
     }
 
     private boolean verificaFimJogo() {
-        return tabuleiroJogador.getNumeroCelulasMortasNavios() == tabuleiroJogador.getNumeroCelulasNavios();
+        return tabuleiroJogador.getNumeroCelulasMortasNavios() == Tabuleiro.getNumeroCelulasNavios();
     }
 
     private void perdeu() {

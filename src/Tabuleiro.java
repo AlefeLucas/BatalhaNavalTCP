@@ -76,10 +76,27 @@ class Tabuleiro {
         return TipoNavio.getNumeroCelulasNavios();
     }
 
-    
 
-    
+    public void imprime() {
+        System.out.println(this);
+    }
 
-   
+    @Override
+    public String toString() {
+        String str = "    0  1  2  3  4  5  6  7  8  9\n\n";
+        for (int i = 0; i < tabuleiro.length; i++) {
+            char c = (char) (i + 'A');
+            str += (c + "   ");
+            for (Celula item : tabuleiro[i]) {
+                str += (item + "  ");                
+            }
+            str += "\n";
+            
+        }
+        return str;
+        
+    }
+    
+    
     
 }

@@ -52,6 +52,21 @@ class Celula {
         this.y = y;
         this.navio = navio;
     }
+
+    @Override
+    public String toString() {
+        if(this.isNavio() && !this.isAtacado()){
+            return this.getNavio().getTipo().getTipo() + "";
+        } else if(this.isNavio()){
+            return "#";
+        } else if(this.isAtacado()){
+            return "•";
+        } else {
+            return " ";
+        }
+        
+    }
+    
     
     
 }

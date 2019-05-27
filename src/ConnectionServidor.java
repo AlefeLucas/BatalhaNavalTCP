@@ -3,18 +3,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 class ConnectionServidor implements Runnable {
 
-    private Socket socket;
-    private ClienteBatalhaNaval cliente;
+    private final Socket socket;
+    private final ClienteBatalhaNaval cliente;
 
-    private Thread thread;
+    private final Thread thread;
 
-    private ObjectInputStream input;
-    private ObjectOutputStream output;
+    private final ObjectInputStream input;
+    private final ObjectOutputStream output;
 
     public ConnectionServidor(Socket socket, ClienteBatalhaNaval cliente) throws IOException {
         this.socket = socket;
