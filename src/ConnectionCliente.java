@@ -36,6 +36,10 @@ public class ConnectionCliente implements Runnable {
                 outroClinete.write(object);
 
             } catch (IOException | ClassNotFoundException e) {
+                if(e.getMessage().equals("Connection reset")){
+                    System.out.println("Fechado;");
+                    System.exit(1);
+                }
                 e.printStackTrace();
             } catch(NullPointerException e){
                 //FAZ NADA

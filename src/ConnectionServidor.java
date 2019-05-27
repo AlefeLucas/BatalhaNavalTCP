@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 class ConnectionServidor implements Runnable {
 
@@ -46,7 +47,12 @@ class ConnectionServidor implements Runnable {
                 } else if (object instanceof String && ((String) object).equals("WIN")) {
                     cliente.setVitoria();
                 }
+            
             } catch (IOException | ClassNotFoundException ex) {
+                if(ex.getMessage().equals("Connection reset")){
+                    System.out.println("Fechado;");
+                    System.exit(1);
+                }
                 ex.printStackTrace();
             } catch (NullPointerException e) {
                 //FAZ NADA

@@ -1,6 +1,9 @@
 
+import java.io.Serializable;
 
-public class Navio {
+
+
+public class Navio implements Serializable{
 
     private int tamanhoRestante;
     private final Celula[] celulas;    

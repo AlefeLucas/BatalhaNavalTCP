@@ -1,5 +1,8 @@
 
-class Celula {
+import java.io.Serializable;
+
+
+class Celula implements Serializable {
     private int x;
     private int y;
     private boolean atacado;
