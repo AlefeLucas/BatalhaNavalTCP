@@ -1,4 +1,9 @@
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+
 class Tabuleiro {
     private final Celula[][] tabuleiro;    
     private final int largura;
@@ -20,10 +25,7 @@ class Tabuleiro {
         }
         return tabuleiro;
     }
-    
-//    public static Navio[] fabricaNavio(){
-//        
-//    }
+
 
     public Celula[][] getTabuleiro() {
         return tabuleiro;
@@ -36,6 +38,40 @@ class Tabuleiro {
     public int getAltura() {
         return altura;
     }
+    
+      
+    void addNaviosDeArquivo(){
+        File f = new File("tabuleiro_cliente.txt");
+        try {
+            Scanner s = new Scanner(f);
+            TipoNavio tipos[] = TipoNavio.values();
+            int quantidade[] = new int[tipos.length];
+            
+            Navio[] navios = new Navio[TipoNavio.getNumeroNavios()];
+            for (int i = 0; i < navios.length; i++) {
+                String linha = s.nextLine();
+                
+                TipoNavio tipo = TipoNavio.tipoForChar(linha.charAt(0));
+                int x = linha.charAt(1) - 'A';
+                int y = linha.charAt(2) - '0';
+                boolean rotacao = linha.charAt(3) == 'V';
+                Navio navio = new Navio(tipo, x, y, rotacao, this);
+                navios[i] = navio;
+                quantidade[tipo.ordinal()]++;
+            }
+            
+            for (int i = 0; i < quantidade.length; i++) {
+                if(quantidade[i] != tipos[i].getQuantidade()){
+                    throw new IllegalStateException("Entrada invalida");
+                }
+                
+            }
+        } catch (FileNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+        
+    }
+
 
     void addNavios() {
         

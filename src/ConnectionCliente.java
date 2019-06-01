@@ -33,14 +33,20 @@ public class ConnectionCliente implements Runnable {
             try {
                 object = input.readObject();
 
-                if (object != null) {
-                    System.out.println("RECEBENDO " + String.format("%8s", object.getClass().getSimpleName()) + " DO CLIENTE " + id);
+                if (object instanceof Boolean) {
+                    servidor.notificarIniciou(((Boolean) object));
+                    
+                } else if (object instanceof Celula) {
+                    servidor.atualizaCelulaInimiga((Celula) object);
+                } else if (object instanceof Ponto) {
+                    Celula resultado = servidor.serAtacado((Ponto) object);
+                    write(resultado);
+                } else if (object instanceof String && ((String) object).equals("WIN")) {
+                    servidor.setVitoria();
+                    System.exit(0);
                 }
-                ConnectionCliente outroClinete = servidor.getOutroCliente(this);
 
-                outroClinete.write(object);
-
-            } catch (IOException | ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException | InterruptedException e) {
                 if (e.getMessage().equals("Connection reset")) {
                     System.out.println("Fechado;");
                     System.exit(1);
@@ -52,10 +58,7 @@ public class ConnectionCliente implements Runnable {
         }
     }
 
-    public void write(Object object) throws IOException {
-        if (object != null) {
-            System.out.println("ENVIANDO  " + String.format("%8s", object.getClass().getSimpleName()) + " AO CLIENTE " + id);
-        }
+    public void write(Object object) throws IOException {       
         output.writeObject(object);
         output.flush();
     }

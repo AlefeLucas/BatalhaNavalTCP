@@ -2,31 +2,31 @@
 import java.io.IOException;
 import java.util.Scanner;
 
-class Saida {
+class SaidaCliente {
 
-    private BatalhaNaval jogo;
+    private JogoCliente jogo;
     private Tabuleiro tabuleiroJogador;
     private Tabuleiro tabuleiroInimigo;
     private final Scanner scanner;
     private boolean pedindoAtaque;
 
-    public Saida() {
+    public SaidaCliente() {
         System.out.println("Jogo Batalha Naval TCP com um servidor e dois clientes.");
         scanner = new Scanner(System.in);
     }
 
-    void setJogo(BatalhaNaval jogo) {
+    void setJogo(JogoCliente jogo) {
         this.jogo = jogo;
     }
 
     void renderizarTabuleiroJogador() {
         this.tabuleiroJogador = jogo.getTabuleiroJogador();
-        
+
     }
 
     void renderizarTabuleiroInimigo() {
         this.tabuleiroInimigo = new Tabuleiro(10, 10);
-        
+
     }
 
     void imprime() {
@@ -46,15 +46,19 @@ class Saida {
                 try {
                     boolean entrou = false;
                     while (!entrou) {
-                        System.out.println("\nDigite coordenada para atacar (ex: A1): ");
+                        System.out.print("\nDigite entrada:\n  P - imprimir tabuleiros\n  Coordenada para atacar (ex: A1)\nEntrada: ");
 
                         pedindoAtaque = true;
                         String linha = scanner.nextLine().toUpperCase();
                         pedindoAtaque = false;
 
-                        entrou = processaEntrada(linha); 
-                        if(!entrou){
-                            System.out.println("Input incorreto.");
+                        if (linha.equalsIgnoreCase("P")) {
+                            imprime();
+                        } else {
+                            entrou = processaEntrada(linha);
+                            if (!entrou) {
+                                System.out.println("Input incorreto.");
+                            }
                         }
                     }
                 } catch (IOException ex) {
@@ -68,12 +72,12 @@ class Saida {
     private boolean processaEntrada(String linha) throws IOException {
         boolean entrou = false;
         if (linha.length() == 2) {
-            
+
             int x = linha.charAt(0) - 'A';
             int y = linha.charAt(1) - '0';
             if (x >= 0 && x <= 9 && y >= 0 && y <= 9) {
                 System.out.println("Atacando: \"" + linha + "\"");
-                
+
                 jogo.atacar(x, y);
                 entrou = true;
             }
@@ -87,7 +91,7 @@ class Saida {
 
     void notificarIniciou(boolean vez) throws IOException {
         System.out.println("Adversário encontrado.\nPartida iniciada.\n");
-        if(vez){
+        if (vez) {
             this.pedirPontoAtaque();
         } else {
             System.out.println("O adversário inicia...\n");
@@ -96,6 +100,14 @@ class Saida {
 
     void aguardando() {
         System.out.println("Aguardando outro jogador.");
+    }
+
+    void serAtacado(Ponto ponto) {
+        System.out.println("Ataque sofrido em \"" + (char) (ponto.getX() + 'A') + "" + ponto.getY() + "\"\n");
+    }
+
+    void feedbackAtaque(boolean isNavio) {
+        System.out.println((isNavio ? "Acertou navio!" : "Acertou água.") + "\n");
     }
 
 }

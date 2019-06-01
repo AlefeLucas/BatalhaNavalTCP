@@ -1,11 +1,10 @@
 
-import java.io.IOException;
 
 public class ClienteMain {
     public static void main(String[] args) {
         try {
-            BatalhaNaval jogo = new BatalhaNaval(args[0], Integer.parseInt(args[1]));
-            Saida saida = new Saida();
+            JogoCliente jogo = new JogoCliente(args[0], Integer.parseInt(args[1]));
+            SaidaCliente saida = new SaidaCliente();
             saida.aguardando();
             saida.setJogo(jogo);
             jogo.setSaida(saida);
@@ -14,8 +13,9 @@ public class ClienteMain {
             saida.renderizarTabuleiroInimigo();
             saida.imprime();
             
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
-        }
+            System.exit(1);
+        } 
     }
 }

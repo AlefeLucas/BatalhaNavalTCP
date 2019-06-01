@@ -26,7 +26,6 @@ class ConnectionServidor implements Runnable {
     }
 
     public void write(Object object) throws IOException {
-
         output.writeObject(object);
         output.flush();
     }
@@ -53,7 +52,7 @@ class ConnectionServidor implements Runnable {
                 }
 
             } catch (IOException | ClassNotFoundException ex) {
-                if (ex.getMessage().equals("Connection reset")) {
+                if (ex.getMessage() != null && ex.getMessage().equals("Connection reset")) {
                     System.out.println("Fechado;");
                     System.exit(1);
                 }

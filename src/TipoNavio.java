@@ -16,11 +16,26 @@ enum TipoNavio {
             case SUBMARINO:
                 return 2;
         }
-        
+
         throw new IllegalStateException("Tipo não tratado");
     }
-    
-     public char getTipo() {
+
+    public static TipoNavio tipoForChar(char c) {
+        switch (c) {
+            case 'P':
+                return PORTA_AVIÕES;
+            case 'T':
+                return NAVIO_TANQUE;
+            case 'C':
+                return CONTRATORPEDEIRO;
+            case 'S':
+                return SUBMARINO;
+        }
+
+        throw new IllegalStateException("Tipo não tratado");
+    }
+
+    public  char getTipo() {
         switch (this) {
             case PORTA_AVIÕES:
                 return 'P';
@@ -49,7 +64,16 @@ enum TipoNavio {
 
         throw new IllegalStateException("Tipo não tratado");
     }
-    
+
+    public static int getNumeroNavios() {
+        int navios = 0;
+        TipoNavio[] values = TipoNavio.values();
+        for (TipoNavio tipo : values) {
+            navios += tipo.getQuantidade();
+        }
+        return navios;
+    }
+
     public static int getNumeroCelulasNavios() {
         int celulasNavios = 0;
         TipoNavio[] values = TipoNavio.values();
@@ -60,9 +84,7 @@ enum TipoNavio {
     }
 
     private static int getNumeroCelulasPorTipo(TipoNavio tipoNavio) {
-        return tipoNavio.getTamanho()* tipoNavio.getQuantidade();
+        return tipoNavio.getTamanho() * tipoNavio.getQuantidade();
     }
-   
-    
 
 }

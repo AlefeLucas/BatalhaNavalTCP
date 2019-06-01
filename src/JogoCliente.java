@@ -1,14 +1,14 @@
 
 import java.io.IOException;
 
-public class BatalhaNaval {
+public class JogoCliente {
 
     public static final int TAMANHO_TABULEIRO = 10;
     private Tabuleiro tabuleiroJogador;
     private final ClienteBatalhaNaval socketCliente;
-    private Saida saida;
+    private SaidaCliente saida;
 
-    public BatalhaNaval(String ip, int porta) throws IOException {
+    public JogoCliente(String ip, int porta) throws IOException {
         System.out.println("Conectando ao servidor " + ip + " na porta " + porta);
         socketCliente = new ClienteBatalhaNaval(ip, porta);
         socketCliente.setJogo(this);
@@ -18,7 +18,7 @@ public class BatalhaNaval {
 
     private void criaNovoTabuleiroJogador() {
         tabuleiroJogador = new Tabuleiro(TAMANHO_TABULEIRO, TAMANHO_TABULEIRO);
-        tabuleiroJogador.addNavios();
+        tabuleiroJogador.addNaviosDeArquivo();
 
         socketCliente.setTabuleiro(tabuleiroJogador);
     }
@@ -27,7 +27,8 @@ public class BatalhaNaval {
         Celula celula = tabuleiroJogador.getCelula(ponto.getX(), ponto.getY());
         celula.setAtacado(true);
 
-        saida.imprime();
+        saida.serAtacado(ponto);
+        //saida.imprime();
         boolean minhaVez = false;
         if (celula.isNavio()) {
             Navio navio = celula.getNavio();
@@ -56,15 +57,12 @@ public class BatalhaNaval {
     }
 
     void atualizaCelulaInimiga(Celula celula) throws IOException {
-        /**
-         * TODO So faz sentido esse método com GUI Imprimir tabuleiros?
-         */
         Celula celula1 = saida.getTabuleiroInimigo().getCelula(celula.getX(), celula.getY());
         celula1.setAtacado(true);
         celula1.setNavio(celula.getNavio());
 
-        saida.imprime();
-
+        //saida.imprime();
+        saida.feedbackAtaque(celula.isNavio());
         if (celula.isNavio()) {
             saida.pedirPontoAtaque();
         }
@@ -86,7 +84,7 @@ public class BatalhaNaval {
         return tabuleiroJogador;
     }
 
-    void setSaida(Saida saida) throws IOException {
+    void setSaida(SaidaCliente saida) throws IOException {
         this.saida = saida;
 
     }

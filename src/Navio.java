@@ -16,6 +16,14 @@ public class Navio implements Serializable{
         alocaEspaço(espaço);
         this.celulas = espaço;
     }
+    
+     public Navio(TipoNavio tipo, int x, int y, boolean orientacao, Tabuleiro tabuleiro) {
+        this.tipo = tipo;
+        this.tamanhoRestante = tipo.getTamanho();
+        Celula[] espaço = NavioBuilder.obtemEspaco(tipo, tabuleiro, x, y, orientacao);
+        alocaEspaço(espaço);
+        this.celulas = espaço;
+    }
 
     public int getTamanhoRestante() {
         return tamanhoRestante;

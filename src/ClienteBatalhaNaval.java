@@ -4,7 +4,7 @@ import java.io.IOException;
 class ClienteBatalhaNaval extends Cliente {
 
     private Tabuleiro tabuleiro;
-    private BatalhaNaval jogo;
+    private JogoCliente jogo;
 
     public ClienteBatalhaNaval(String ip, int port) throws IOException {
         super(ip, port);
@@ -15,7 +15,7 @@ class ClienteBatalhaNaval extends Cliente {
         jogo.atualizaCelulaInimiga(celula);
     }
 
-    public void setJogo(BatalhaNaval jogo) {
+    public void setJogo(JogoCliente jogo) {
         this.jogo = jogo;
     }
 
