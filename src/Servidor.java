@@ -11,6 +11,7 @@ public class Servidor {
     private final List<ConnectionCliente> clientes;
     
     public Servidor(int port) throws IOException{
+        System.out.println("Iniciando servidor na porta " + port);
         this.serverSocket = new ServerSocket(port);
         clientes = new ArrayList<>(2);
     }
@@ -24,21 +25,27 @@ public class Servidor {
     }
 
     void iniciar() throws IOException, InterruptedException {
-        Socket socket;
+        aguardaClientes();
+        
+        System.out.println("Delay 1 segundo\n");
+        TimeUnit.SECONDS.sleep(1);
+        
+        notificaIniciar();
+    }
 
+    private void notificaIniciar() throws IOException {
+        clientes.get(0).write(true);
+        clientes.get(1).write(false);
+    }
+
+    private void aguardaClientes() throws IOException {
         while(clientes.size() < 2){
             System.out.println("Aguardando cliente... " + clientes.size() + " de 2.");
-            socket = serverSocket.accept();
+            Socket socket = serverSocket.accept();
 
             System.out.println("Obteve cliente.");
             clientes.add(new ConnectionCliente(clientes.size() + 1, socket, this));
         }
-
         System.out.println("2 de 2.");
-        
-        System.out.println("Delay 1 segundo\n");
-        TimeUnit.SECONDS.sleep(1);
-        clientes.get(0).write(true);
-        clientes.get(1).write(false);
     }
 }

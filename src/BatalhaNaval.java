@@ -8,8 +8,9 @@ public class BatalhaNaval {
     private final ClienteBatalhaNaval socketCliente;
     private Saida saida;
 
-    public BatalhaNaval() throws IOException {
-        socketCliente = new ClienteBatalhaNaval("127.0.0.1", 8080);
+    public BatalhaNaval(String ip, int porta) throws IOException {
+        System.out.println("Conectando ao servidor " + ip + " na porta " + porta);
+        socketCliente = new ClienteBatalhaNaval(ip, porta);
         socketCliente.setJogo(this);
 
         criaNovoTabuleiroJogador();

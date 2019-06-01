@@ -7,7 +7,7 @@ class Saida {
     private BatalhaNaval jogo;
     private Tabuleiro tabuleiroJogador;
     private Tabuleiro tabuleiroInimigo;
-    private Scanner scanner;
+    private final Scanner scanner;
     private boolean pedindoAtaque;
 
     public Saida() {
@@ -52,17 +52,7 @@ class Saida {
                         String linha = scanner.nextLine().toUpperCase();
                         pedindoAtaque = false;
 
-                        if (linha.length() == 2) {
-
-                            int x = linha.charAt(0) - 'A';
-                            int y = linha.charAt(1) - '0';
-                            if (x >= 0 && x <= 9 && y >= 0 && y <= 9) {
-                                System.out.println("Atacando: \"" + linha + "\"");
-
-                                jogo.atacar(x, y);
-                                entrou = true;
-                            } 
-                        } 
+                        entrou = processaEntrada(linha); 
                         if(!entrou){
                             System.out.println("Input incorreto.");
                         }
@@ -73,6 +63,22 @@ class Saida {
             });
             threadPedirAtaque.start();
         }
+    }
+
+    private boolean processaEntrada(String linha) throws IOException {
+        boolean entrou = false;
+        if (linha.length() == 2) {
+            
+            int x = linha.charAt(0) - 'A';
+            int y = linha.charAt(1) - '0';
+            if (x >= 0 && x <= 9 && y >= 0 && y <= 9) {
+                System.out.println("Atacando: \"" + linha + "\"");
+                
+                jogo.atacar(x, y);
+                entrou = true;
+            }
+        }
+        return entrou;
     }
 
     public Tabuleiro getTabuleiroInimigo() {
