@@ -43,24 +43,18 @@ public class BatalhaNaval {
             perdeu();
             System.exit(0);
         } else if (minhaVez) {
-            Thread t = new Thread(() -> {
-                try {
-                    saida.pedirPontoAtaque();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
-            t.start();
+            saida.pedirPontoAtaque();
+
         }
 
         return celula;
     }
 
     void vitoria() {
-        System.out.println("Você Venceu!");        
+        System.out.println("Você Venceu!");
     }
 
-    void atualizaCelulaInimiga(Celula celula) {
+    void atualizaCelulaInimiga(Celula celula) throws IOException {
         /**
          * TODO So faz sentido esse método com GUI Imprimir tabuleiros?
          */
@@ -71,14 +65,7 @@ public class BatalhaNaval {
         saida.imprime();
 
         if (celula.isNavio()) {
-            Thread t = new Thread(() -> {
-                try {
-                    saida.pedirPontoAtaque();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
-            t.start();
+            saida.pedirPontoAtaque();
         }
     }
 
@@ -87,7 +74,7 @@ public class BatalhaNaval {
     }
 
     private void perdeu() {
-        System.out.println("Você Perdeu!");        
+        System.out.println("Você Perdeu!");
     }
 
     private void enviaVitoria() throws IOException {
@@ -98,14 +85,21 @@ public class BatalhaNaval {
         return tabuleiroJogador;
     }
 
-    void setSaida(Saida saida) {
+    void setSaida(Saida saida) throws IOException {
         this.saida = saida;
+
     }
 
     public void atacar(int x, int y) throws IOException {
         Ponto ponto = new Ponto(x, y);
 
         socketCliente.atacar(ponto);
+    }
+
+    void notificarIniciou(boolean vez) throws IOException {
+        if (saida != null) {
+            saida.notificarIniciou(vez);
+        } 
     }
 
 }

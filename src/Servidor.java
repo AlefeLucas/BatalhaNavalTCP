@@ -4,6 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Servidor {
     private final ServerSocket serverSocket;
@@ -22,7 +23,7 @@ public class Servidor {
         throw new IllegalStateException("Não foi possível obter outro cliente");
     }
 
-    void iniciar() throws IOException {
+    void iniciar() throws IOException, InterruptedException {
         Socket socket;
 
         while(clientes.size() < 2){
@@ -30,9 +31,14 @@ public class Servidor {
             socket = serverSocket.accept();
 
             System.out.println("Obteve cliente.");
-            clientes.add(new ConnectionCliente(socket, this));
+            clientes.add(new ConnectionCliente(clientes.size() + 1, socket, this));
         }
 
         System.out.println("2 de 2.");
+        
+        System.out.println("Delay 1 segundo\n");
+        TimeUnit.SECONDS.sleep(1);
+        clientes.get(0).write(true);
+        clientes.get(1).write(false);
     }
 }

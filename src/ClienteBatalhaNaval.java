@@ -11,7 +11,7 @@ class ClienteBatalhaNaval extends Cliente {
         conectar();
     }
 
-    void atualizaCelulaInimiga(Celula celula) {
+    void atualizaCelulaInimiga(Celula celula) throws IOException {
         jogo.atualizaCelulaInimiga(celula);
     }
 
@@ -45,6 +45,11 @@ class ClienteBatalhaNaval extends Cliente {
     
     public void enviaVitoria() throws IOException {
         getConnection().write("WIN");
+    }
+
+    void notificarIniciou(boolean vez) throws IOException {
+       
+        jogo.notificarIniciou(vez);
     }
 
 }

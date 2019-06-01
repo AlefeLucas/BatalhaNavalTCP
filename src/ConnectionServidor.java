@@ -3,7 +3,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 
 class ConnectionServidor implements Runnable {
 
@@ -27,6 +26,7 @@ class ConnectionServidor implements Runnable {
     }
 
     public void write(Object object) throws IOException {
+
         output.writeObject(object);
         output.flush();
     }
@@ -39,7 +39,10 @@ class ConnectionServidor implements Runnable {
             try {
                 object = input.readObject();
 
-                if (object instanceof Celula) {
+                if (object instanceof Boolean) {
+                    cliente.notificarIniciou(((Boolean) object));
+                    
+                } else if (object instanceof Celula) {
                     cliente.atualizaCelulaInimiga((Celula) object);
                 } else if (object instanceof Ponto) {
                     Celula resultado = cliente.serAtacado((Ponto) object);
@@ -48,9 +51,9 @@ class ConnectionServidor implements Runnable {
                     cliente.setVitoria();
                     System.exit(0);
                 }
-            
+
             } catch (IOException | ClassNotFoundException ex) {
-                if(ex.getMessage().equals("Connection reset")){
+                if (ex.getMessage().equals("Connection reset")) {
                     System.out.println("Fechado;");
                     System.exit(1);
                 }
