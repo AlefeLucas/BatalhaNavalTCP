@@ -45,20 +45,20 @@ public class Servidor {
         
     }
 
-    void notificarIniciou(boolean vez) throws IOException, InterruptedException {
+    public void notificarIniciou(boolean vez) throws IOException, InterruptedException {
 
         jogo.notificarIniciou(vez);
     }
 
-    void atualizaCelulaInimiga(Celula celula) throws IOException, InterruptedException {
+    public void atualizaCelulaInimiga(Celula celula) throws IOException, InterruptedException {
         jogo.atualizaCelulaInimiga(celula);
     }
 
-    void setVitoria() {
+    public void setVitoria() {
         jogo.vitoria();
     }
 
-    Celula serAtacado(Ponto ponto) throws IOException, InterruptedException {
+    public Celula serAtacado(Ponto ponto) throws IOException, InterruptedException {
         return jogo.serAtacado(ponto);
     }
 
@@ -73,7 +73,7 @@ public class Servidor {
 
         System.out.println("Obteve cliente.");
 
-        cliente = new ConnectionCliente(1, socket, this);
+        cliente = new ConnectionCliente(socket, this);
 
     }
 }

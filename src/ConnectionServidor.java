@@ -7,14 +7,14 @@ import java.net.Socket;
 class ConnectionServidor implements Runnable {
 
     private final Socket socket;
-    private final ClienteBatalhaNaval cliente;
+    private final Cliente cliente;
 
     private final Thread thread;
 
     private final ObjectInputStream input;
     private final ObjectOutputStream output;
 
-    public ConnectionServidor(Socket socket, ClienteBatalhaNaval cliente) throws IOException {
+    public ConnectionServidor(Socket socket, Cliente cliente) throws IOException {
         this.socket = socket;
         this.cliente = cliente;
 

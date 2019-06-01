@@ -3,39 +3,33 @@ import java.io.IOException;
 
 public class JogoCliente {
 
-    public static final int TAMANHO_TABULEIRO = 10;
     private Tabuleiro tabuleiroJogador;
-    private final ClienteBatalhaNaval socketCliente;
+    private final Cliente socketCliente;
     private SaidaCliente saida;
 
     public JogoCliente(String ip, int porta) throws IOException {
         System.out.println("Conectando ao servidor " + ip + " na porta " + porta);
-        socketCliente = new ClienteBatalhaNaval(ip, porta);
+        socketCliente = new Cliente(ip, porta);
         socketCliente.setJogo(this);
 
         criaNovoTabuleiroJogador();
     }
 
     private void criaNovoTabuleiroJogador() {
-        tabuleiroJogador = new Tabuleiro(TAMANHO_TABULEIRO, TAMANHO_TABULEIRO);
+        tabuleiroJogador = new Tabuleiro(10, 10);
         tabuleiroJogador.addNaviosDeArquivo();
 
         socketCliente.setTabuleiro(tabuleiroJogador);
     }
 
-    Celula serAtacado(Ponto ponto) throws IOException {
+    public Celula serAtacado(Ponto ponto) throws IOException {
         Celula celula = tabuleiroJogador.getCelula(ponto.getX(), ponto.getY());
         celula.setAtacado(true);
 
         saida.serAtacado(ponto);
         //saida.imprime();
         boolean minhaVez = false;
-        if (celula.isNavio()) {
-            Navio navio = celula.getNavio();
-            navio.subtraiTamanhoRestante();
-            //Inimigo acertou e jogara dnv
-
-        } else {
+        if (!celula.isNavio()) {
             //Inimigo errou, sua vez
             minhaVez = true;
         }
@@ -52,11 +46,11 @@ public class JogoCliente {
         return celula;
     }
 
-    void vitoria() {
+    public void vitoria() {
         System.out.println("Você Venceu!");
     }
 
-    void atualizaCelulaInimiga(Celula celula) throws IOException {
+    public void atualizaCelulaInimiga(Celula celula) throws IOException {
         Celula celula1 = saida.getTabuleiroInimigo().getCelula(celula.getX(), celula.getY());
         celula1.setAtacado(true);
         celula1.setNavio(celula.getNavio());
@@ -84,7 +78,7 @@ public class JogoCliente {
         return tabuleiroJogador;
     }
 
-    void setSaida(SaidaCliente saida) throws IOException {
+    public void setSaida(SaidaCliente saida) throws IOException {
         this.saida = saida;
 
     }
@@ -95,9 +89,27 @@ public class JogoCliente {
         socketCliente.atacar(ponto);
     }
 
-    void notificarIniciou(boolean vez) throws IOException {
+    public void notificarIniciou(boolean vez) throws IOException {
         if (saida != null) {
             saida.notificarIniciou(vez);
+        } 
+    }
+    
+    public static void main(String[] args) {
+        try {
+            JogoCliente jogo = new JogoCliente(args[0], Integer.parseInt(args[1]));
+            SaidaCliente saida = new SaidaCliente();
+            saida.aguardando();
+            saida.setJogo(jogo);
+            jogo.setSaida(saida);
+            
+            saida.renderizarTabuleiroJogador();
+            saida.renderizarTabuleiroInimigo();
+            saida.imprime();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.exit(1);
         } 
     }
 

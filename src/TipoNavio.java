@@ -35,7 +35,7 @@ enum TipoNavio {
         throw new IllegalStateException("Tipo não tratado");
     }
 
-    public  char getTipo() {
+    public char getTipo() {
         switch (this) {
             case PORTA_AVIÕES:
                 return 'P';
@@ -83,8 +83,8 @@ enum TipoNavio {
         return celulasNavios;
     }
 
-    private static int getNumeroCelulasPorTipo(TipoNavio tipoNavio) {
-        return tipoNavio.getTamanho() * tipoNavio.getQuantidade();
+    private static int getNumeroCelulasPorTipo(TipoNavio tipo) {
+        return tipo.getTamanho() * tipo.getQuantidade();
     }
 
 }

@@ -1,7 +1,7 @@
 
 import java.util.Random;
 
-public class NavioBuilder {
+public abstract class NavioBuilder {
 
     private static final Random RANDOM = new Random();
 

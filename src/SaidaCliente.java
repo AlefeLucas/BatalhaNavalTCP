@@ -15,30 +15,29 @@ class SaidaCliente {
         scanner = new Scanner(System.in);
     }
 
-    void setJogo(JogoCliente jogo) {
+    public void setJogo(JogoCliente jogo) {
         this.jogo = jogo;
     }
 
-    void renderizarTabuleiroJogador() {
+    public void renderizarTabuleiroJogador() {
         this.tabuleiroJogador = jogo.getTabuleiroJogador();
 
     }
 
-    void renderizarTabuleiroInimigo() {
+    public void renderizarTabuleiroInimigo() {
         this.tabuleiroInimigo = new Tabuleiro(10, 10);
 
     }
 
-    void imprime() {
+    public void imprime() {
         System.out.println("\nSEU TABULEIRO:");
-        System.out.println(this.tabuleiroJogador);
-        System.out.println("");
-        System.out.println("TABULEIRO INIMIGO:");
-        System.out.println(this.tabuleiroInimigo);
+        this.tabuleiroJogador.imprime();
+        System.out.println("\nTABULEIRO DO INIMIGO:");
+        this.tabuleiroInimigo.imprimeRevelado();
         System.out.println("");
     }
 
-    void pedirPontoAtaque() throws IOException {
+    public void pedirPontoAtaque() throws IOException {
         if (pedindoAtaque) {
             System.out.println("Digite coordenada para atacar (ex: A1): ");
         } else {
@@ -89,7 +88,7 @@ class SaidaCliente {
         return tabuleiroInimigo;
     }
 
-    void notificarIniciou(boolean vez) throws IOException {
+    public void notificarIniciou(boolean vez) throws IOException {
         System.out.println("Adversário encontrado.\nPartida iniciada.\n");
         if (vez) {
             this.pedirPontoAtaque();
@@ -98,15 +97,15 @@ class SaidaCliente {
         }
     }
 
-    void aguardando() {
+    public void aguardando() {
         System.out.println("Aguardando outro jogador.");
     }
 
-    void serAtacado(Ponto ponto) {
+    public void serAtacado(Ponto ponto) {
         System.out.println("Ataque sofrido em \"" + (char) (ponto.getX() + 'A') + "" + ponto.getY() + "\"\n");
     }
 
-    void feedbackAtaque(boolean isNavio) {
+    public void feedbackAtaque(boolean isNavio) {
         System.out.println((isNavio ? "Acertou navio!" : "Acertou água.") + "\n");
     }
 

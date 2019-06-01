@@ -3,10 +3,9 @@ import java.io.Serializable;
 
 
 class Celula implements Serializable {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     private boolean atacado;
-    
     private Navio navio;
 
     public Navio getNavio() {
@@ -21,16 +20,8 @@ class Celula implements Serializable {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 
     public boolean isAtacado() {
@@ -48,12 +39,6 @@ class Celula implements Serializable {
     public Celula(int x, int y) {
         this.x = x;
         this.y = y;
-    }
-
-    public Celula(int x, int y, Navio navio) {
-        this.x = x;
-        this.y = y;
-        this.navio = navio;
     }
 
     @Override

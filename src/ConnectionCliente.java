@@ -8,17 +8,16 @@ public class ConnectionCliente implements Runnable {
 
     private final Socket socket;
     private final Servidor servidor;
-    private int id;
 
     private final Thread thread;
 
     private final ObjectInputStream input;
     private final ObjectOutputStream output;
 
-    public ConnectionCliente(int id, Socket socket, Servidor servidor) throws IOException {
+    public ConnectionCliente(Socket socket, Servidor servidor) throws IOException {
         this.socket = socket;
         this.servidor = servidor;
-        this.id = id;
+       
         this.thread = new Thread(this);
         this.thread.start();
 

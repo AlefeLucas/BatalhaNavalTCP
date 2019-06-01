@@ -30,7 +30,7 @@ class SaidaServidor {
 
     void imprime() {
         System.out.println("\nTABULEIRO DO SERVIDOR:");
-        System.out.println(this.tabuleiroJogador);
+        this.tabuleiroJogador.imprime();
         System.out.println("");
     }
 
